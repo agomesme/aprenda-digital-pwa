@@ -235,3 +235,4 @@ Open Source - Você é livre para usar, modificar e compartilhar!
 **Criado com ❤️ para aprender digital com segurança**
 
 Versão: 1.0.0 | PWA | Offline-First
+ 
