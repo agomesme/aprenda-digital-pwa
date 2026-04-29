@@ -3,15 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-    open: true
-  },
   build: {
-    target: 'es2015',
-    minify: 'terser',
+    minify: 'esbuild',
     outDir: 'dist',
-    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -20,8 +14,5 @@ export default defineConfig({
         }
       }
     }
-  },
-  preview: {
-    port: 4173
   }
 })
