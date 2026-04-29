@@ -128,7 +128,6 @@ export default function AppIdosos() {
             <MenuCard icon="🚗" title="Mobilidade Urbana" desc="Simule uma corrida" gradient="from-purple-400 to-purple-600" onClick={() => setScreen('mobilidade')} />
             <MenuCard icon="🛍️" title="Compra Fácil" desc="Compre online com segurança" gradient="from-blue-400 to-blue-600" onClick={() => setScreen('loja')} />
             <MenuCard icon="🏛️" title="INSS Cidadão Digital" desc="Aposentadoria e benefícios" gradient="from-cyan-400 to-cyan-600" onClick={() => setScreen('inss')} />
-            <MenuCard icon="🏙️" title="Portal PBH" desc="Serviços da Prefeitura de BH" gradient="from-teal-500 to-teal-700" onClick={() => setScreen('pbh')} />
             <MenuCard icon="🍔" title="ComidaJá" desc="Peça comida em casa" gradient="from-orange-400 to-orange-600" onClick={() => setScreen('comida')} />
             <MenuCard icon="📱" title="Mensagens (SMS)" desc="Cuidado com golpes!" gradient="from-yellow-400 to-yellow-600" onClick={() => setScreen('sms')} badge={semsNaoLidos} />
             <MenuCard icon="🛡️" title="Segurança Digital" desc="Dicas para se proteger" gradient="from-red-400 to-red-600" onClick={() => setScreen('seguranca')} />
@@ -1219,97 +1218,11 @@ export default function AppIdosos() {
   const TelaLoja = () => {
     const [tab, setTab] = useState('produtos');
     const [busca, setBusca] = useState('');
-    const [step, setStep] = useState('pesquisar');
-    const [buscaSite, setBuscaSite] = useState('');
-    const [sitePesquisado, setSitePesquisado] = useState(false);
+    const [step, setStep] = useState('lista');
     const [carrinho, setCarrinho] = useState([]);
     const [pagamento, setPagamento] = useState(null);
     const [dadosCartao, setDadosCartao] = useState({ numero: '', validade: '', cvv: '' });
     const [pixCopiado, setPixCopiado] = useState(false);
-
-    // Tela de pesquisa de site (NOVA)
-    if (step === 'pesquisar') return (
-      <div className="min-h-screen bg-slate-50 p-4">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center gap-3 mb-6 pt-4">
-            <button onClick={() => setScreen('home')} className="p-2 hover:bg-slate-200 rounded-lg"><ArrowLeft size={24} /></button>
-            <span className="text-2xl">🛍️</span>
-            <h1 className="text-xl font-bold">Compra Fácil</h1>
-          </div>
-
-          <div className="bg-blue-600 text-white rounded-2xl p-5 mb-4">
-            <h2 className="text-lg font-bold mb-1">Passo 1: Pesquise o site</h2>
-            <p className="text-sm opacity-90">Antes de comprar, sempre pesquise se o site é confiável!</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-5 shadow-sm mb-4">
-            <label className="block font-bold mb-2">🔍 Digite o nome do site que quer pesquisar:</label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Ex: Amazon, Shopee, Mercado Livre..."
-                value={buscaSite}
-                onChange={e => setBuscaSite(e.target.value)}
-                className="flex-1 p-3 border-2 rounded-lg text-lg"
-              />
-              <button
-                onClick={() => { if (buscaSite) setSitePesquisado(true); }}
-                className="bg-blue-600 text-white font-bold px-4 rounded-lg"
-              >
-                🔍
-              </button>
-            </div>
-          </div>
-
-          {sitePesquisado && (
-            <div className="space-y-3 mb-4">
-              <div className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-green-500">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-green-600 font-bold text-lg">✅</span>
-                  <span className="font-bold">{buscaSite}.com.br</span>
-                </div>
-                <p className="text-sm text-slate-600">Site encontrado! Verifique sempre o cadeado 🔒 na barra de endereço.</p>
-              </div>
-
-              <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4">
-                <p className="font-bold text-yellow-800 mb-2">⚠️ Dica importante:</p>
-                <p className="text-sm text-yellow-900 mb-3">Antes de comprar, pesquise o site no <strong>Reclame Aqui</strong> para ver se outras pessoas tiveram problemas!</p>
-                <button
-                  onClick={() => window.open('https://www.reclameaqui.com.br', '_blank')}
-                  className="w-full bg-yellow-500 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2"
-                >
-                  🔎 Pesquisar no Reclame Aqui
-                </button>
-              </div>
-
-              <div className="bg-white rounded-xl p-4 shadow-sm">
-                <p className="font-bold mb-2">📋 Checklist de segurança:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex gap-2"><span className="text-green-600">✓</span> Site tem cadeado 🔒 na barra de endereço</li>
-                  <li className="flex gap-2"><span className="text-green-600">✓</span> Nome do site está correto (sem erros de escrita)</li>
-                  <li className="flex gap-2"><span className="text-green-600">✓</span> Pesquisou no Reclame Aqui</li>
-                  <li className="flex gap-2"><span className="text-green-600">✓</span> Preço não está absurdamente baixo</li>
-                </ul>
-              </div>
-
-              <button
-                onClick={() => setStep('lista')}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl text-lg"
-              >
-                ✅ Site verificado! Entrar na loja →
-              </button>
-            </div>
-          )}
-
-          {!sitePesquisado && (
-            <div className="bg-slate-100 rounded-xl p-4 text-center text-slate-500">
-              <p className="text-4xl mb-2">🔍</p>
-              <p className="text-sm">Digite o nome de um site acima para começar</p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
 
     const produtos = [
       { id: 1, nome: 'Teclado Sem Fio', preco: 89.90, emoji: '⌨️', categoria: 'Eletrônicos' },
@@ -1479,12 +1392,11 @@ export default function AppIdosos() {
             </>
           )}
 
-          {step === 'resumo' && (
+          {tab === 'produtos' && step === 'resumo' && (
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="text-center mb-6">
                 <div className="text-6xl mb-3">🎉</div>
                 <h2 className="text-2xl font-bold mb-2">Compra Confirmada!</h2>
-                <p className="text-green-600 font-bold">Parabéns! Você aprendeu a comprar online!</p>
               </div>
               <div className="bg-slate-50 rounded-lg p-4 mb-4 space-y-2 text-sm">
                 <div className="flex justify-between"><span>Pedido:</span><span className="font-bold">PED-{Date.now().toString().slice(-6)}</span></div>
@@ -1496,16 +1408,8 @@ export default function AppIdosos() {
                 <div className="font-bold text-blue-900 mb-2">📦 Próximos passos</div>
                 <p className="text-sm text-blue-800">Acompanhe seu pedido na aba "Meus Pedidos". Entrega em 3-5 dias úteis.</p>
               </div>
-              <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4 mb-4">
-                <p className="font-bold text-green-800 mb-1">✅ Você aprendeu:</p>
-                <ul className="text-sm text-green-700 space-y-1">
-                  <li>• Pesquisar e verificar um site</li>
-                  <li>• Adicionar produtos ao carrinho</li>
-                  <li>• Finalizar uma compra com segurança</li>
-                </ul>
-              </div>
-              <button onClick={() => { setTab('pedidos'); setStep('lista'); }} className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg mb-2">📦 Ver Meus Pedidos</button>
-              <button onClick={() => setStep('pesquisar')} className="w-full bg-slate-200 font-bold py-2 rounded-lg">🛒 Nova Compra</button>
+              <button onClick={() => { setTab('pedidos'); setStep('lista'); }} className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg mb-2">Acompanhar Pedido</button>
+              <button onClick={() => setStep('lista')} className="w-full bg-slate-200 font-bold py-2 rounded-lg">Continuar Comprando</button>
             </div>
           )}
 
@@ -1815,9 +1719,10 @@ export default function AppIdosos() {
               </div>
               <button 
                 onClick={() => {
+                  alert(`✅ Pedido confirmado!\n\nRestaurante: ${restauranteSelec.nome}\nTotal: R$ ${(total + restauranteSelec.taxa).toFixed(2)}\nEntrega em: ${restauranteSelec.tempo}\nEndereço: ${endereco}\n\nPagamento: ${pagamento}\n\nSeu entregador chegará em breve!`);
                   setCarrinho([]);
+                  setStep('menu');
                   setPagamento(null);
-                  setStep('confirmado');
                 }}
                 disabled={!pagamento}
                 className="w-full bg-orange-500 disabled:bg-slate-300 text-white font-bold py-4 rounded-lg text-lg mb-2"
@@ -1830,25 +1735,11 @@ export default function AppIdosos() {
             </div>
           )}
 
-          {step === 'confirmado' && (
-            <div className="bg-white rounded-xl p-8 shadow-md mt-4 text-center">
-              <div className="text-6xl mb-3">🎉</div>
-              <h2 className="text-2xl font-bold mb-2">Pedido Confirmado!</h2>
-              <p className="text-orange-600 font-bold mb-6">Seu entregador está a caminho!</p>
-              <div className="bg-slate-50 rounded-lg p-4 mb-4 text-left space-y-2 text-sm">
-                <div className="flex justify-between"><span>Restaurante:</span><span className="font-bold">{restauranteSelec?.nome}</span></div>
-                <div className="flex justify-between"><span>Endereço:</span><span className="font-bold">{endereco}</span></div>
-                <div className="flex justify-between"><span>Entrega estimada:</span><span className="font-bold">{restauranteSelec?.tempo}</span></div>
-              </div>
-              <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-4 mb-6">
-                <p className="text-sm text-orange-800">🛵 No app real, você acompanha o entregador pelo mapa!</p>
-              </div>
-              <button onClick={() => { setStep('endereco'); setRestauranteSelec(null); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-lg mb-2">🍔 Novo Pedido</button>
-              <button onClick={() => setScreen('home')} className="w-full bg-slate-200 font-bold py-2 rounded-lg">Voltar ao Menu</button>
-            </div>
-          )}
-
           {step === 'menu' && (
+            <>
+              <div className="bg-white rounded-xl p-3 shadow-sm mb-4 flex items-center gap-2">
+                <Search size={20} className="text-slate-400" />
+                <input type="text" placeholder="Buscar restaurantes" value={busca} onChange={(e) => setBusca(e.target.value)} className="flex-1 outline-none" />
               </div>
               <div className="bg-orange-50 border-l-4 border-orange-500 rounded-r-xl p-3 mb-4 text-sm text-orange-900">
                 💡 <strong>Dica:</strong> Confira sempre o tempo e taxa de entrega antes de pedir!
@@ -2161,79 +2052,19 @@ export default function AppIdosos() {
   };
 
   // ==================== SEGURANÇA ====================
-  // ==================== PORTAL PBH ====================
-  const TelaPBH = () => {
-    const [step, setStep] = useState('menu');
-    const servicos = [
-      { icon: '🗑️', titulo: 'Coleta de Lixo', desc: 'Agendar coleta especial', link: 'https://prefeitura.pbh.gov.br/obras-infraestrutura/informacoes/limpeza-urbana' },
-      { icon: '💡', titulo: 'Iluminação Pública', desc: 'Reportar lâmpada apagada', link: 'https://prefeitura.pbh.gov.br/obras-infraestrutura/informacoes/iluminacao-publica' },
-      { icon: '🏥', titulo: 'Saúde (BH Resolve)', desc: 'Agendar consulta, vacinas', link: 'https://prefeitura.pbh.gov.br/saude' },
-      { icon: '📋', titulo: 'IPTU', desc: 'Emitir boleto, parcelar', link: 'https://prefeitura.pbh.gov.br/fazenda/informacoes/iptu' },
-      { icon: '🚌', titulo: 'Transporte (BHBus)', desc: 'Recarga do Cartão BHBus', link: 'https://prefeitura.pbh.gov.br/bhtrans' },
-      { icon: '🏫', titulo: 'Educação', desc: 'Matrícula, vagas em escolas', link: 'https://prefeitura.pbh.gov.br/educacao' },
-      { icon: '🐾', titulo: 'Bem-Estar Animal', desc: 'Adoção e registro de pets', link: 'https://prefeitura.pbh.gov.br/saude/bem-estar-animal' },
-      { icon: '📍', titulo: 'BH APP', desc: 'Abrir chamado online', link: 'https://prefeitura.pbh.gov.br' },
-    ];
-    return (
-      <div className="min-h-screen bg-slate-50 pb-10">
-        <div className="bg-gradient-to-br from-teal-700 to-teal-500 text-white p-4 pb-6">
-          <div className="flex items-center gap-3 mb-3">
-            <button onClick={() => setScreen('home')} className="p-1 hover:bg-white/10 rounded-lg"><ArrowLeft size={22} /></button>
-            <span className="text-2xl">🏙️</span>
-            <h1 className="text-xl font-bold">Portal PBH</h1>
-          </div>
-          <p className="text-sm opacity-90 ml-10">Prefeitura de Belo Horizonte</p>
-        </div>
-        <div className="max-w-md mx-auto p-4">
-          <div className="bg-white rounded-xl p-4 shadow-sm mb-4">
-            <p className="text-sm text-slate-600">Acesse os principais serviços da Prefeitura de BH. Clique para ser direcionado ao site oficial.</p>
-          </div>
-          <div className="bg-teal-50 border-l-4 border-teal-600 rounded-r-xl p-3 mb-4 text-sm text-teal-900">
-            🔒 <strong>Segurança:</strong> O site oficial da PBH sempre começa com <strong>prefeitura.pbh.gov.br</strong>
-          </div>
-          <div className="space-y-3">
-            {servicos.map((s, i) => (
-              <button key={i} onClick={() => window.open(s.link, '_blank')} className="w-full bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition flex items-center gap-4 text-left">
-                <span className="text-3xl">{s.icon}</span>
-                <div className="flex-1">
-                  <div className="font-bold text-slate-900">{s.titulo}</div>
-                  <div className="text-sm text-slate-500">{s.desc}</div>
-                </div>
-                <ChevronRight size={20} className="text-teal-600" />
-              </button>
-            ))}
-          </div>
-          <div className="mt-4 bg-teal-600 rounded-xl p-4 text-white text-center">
-            <p className="font-bold mb-1">🌐 Site oficial completo</p>
-            <button onClick={() => window.open('https://prefeitura.pbh.gov.br', '_blank')} className="bg-white text-teal-700 font-bold py-2 px-6 rounded-lg w-full mt-2">
-              Acessar prefeitura.pbh.gov.br
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // ==================== SEGURANÇA DIGITAL ====================
-  const TelaSeguranca = () => {
-    const [aba, setAba] = useState('dicas');
-    return (
-      <div className="min-h-screen bg-slate-50 pb-10">
-        <div className="flex items-center gap-3 mb-0 pt-4 px-4">
+  const TelaSeguranca = () => (
+    <div className="min-h-screen bg-slate-50 p-4">
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center gap-3 mb-6 pt-4">
           <button onClick={() => setScreen('home')} className="p-2 hover:bg-slate-200 rounded-lg"><ArrowLeft size={24} /></button>
           <h1 className="text-2xl font-bold">Segurança Digital</h1>
         </div>
-        <div className="flex gap-2 px-4 mt-4 mb-4">
-          <button onClick={() => setAba('dicas')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${aba === 'dicas' ? 'bg-red-500 text-white' : 'bg-white text-slate-600 border'}`}>🛡️ Dicas</button>
-          <button onClick={() => setAba('crimes')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${aba === 'crimes' ? 'bg-red-500 text-white' : 'bg-white text-slate-600 border'}`}>🚨 Crimes</button>
-          <button onClick={() => setAba('denunciar')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${aba === 'denunciar' ? 'bg-red-500 text-white' : 'bg-white text-slate-600 border'}`}>📢 Denunciar</button>
-        </div>
-        <div className="max-w-md mx-auto px-4 space-y-4">
-          {aba === 'dicas' && [
-            { icon: '🔐', titulo: 'Senhas Fortes', dicas: ['8+ caracteres', 'Misture letras, números e símbolos', 'Nunca use datas pessoais', 'Use uma senha diferente para cada conta'] },
-            { icon: '🔗', titulo: 'Links Suspeitos', dicas: ['Nunca clique em links de SMS', 'Bancos não pedem dados por link', 'Acesse sempre pelo app oficial', 'Desconfie de promoções muito boas'] },
-            { icon: '📱', titulo: 'Golpes Comuns', dicas: ['Falso parente pedindo PIX', 'INSS oferecendo benefício', 'Conta bancária bloqueada', 'Você ganhou prêmio falso'] },
-            { icon: '💳', titulo: 'Cartão Virtual', dicas: ['Ideal para sites desconhecidos', 'Anote os dados em papel', 'Tem limite e validade próprios', 'Cancele depois de usar'] }
+        <div className="space-y-4">
+          {[
+            { icon: '🔐', titulo: 'Senhas Fortes', dicas: ['8+ caracteres', 'Misture letras, números e símbolos', 'Nunca use datas pessoais'] },
+            { icon: '🔗', titulo: 'Links Suspeitos', dicas: ['Nunca clique em links de SMS', 'Bancos não pedem dados por link', 'Acesse sempre pelo app oficial'] },
+            { icon: '📱', titulo: 'Golpes Comuns', dicas: ['Falso parente pedindo PIX', 'INSS oferecendo benefício', 'Conta bancária bloqueada', 'Você ganhou prêmio'] },
+            { icon: '💳', titulo: 'Cartão Virtual', dicas: ['Ideal para sites desconhecidos', 'Anote os dados em papel', 'Tem limite e validade'] }
           ].map((d, i) => (
             <div key={i} className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-green-500">
               <h3 className="text-lg font-bold mb-3 flex items-center gap-2"><span className="text-2xl">{d.icon}</span>{d.titulo}</h3>
@@ -2242,63 +2073,10 @@ export default function AppIdosos() {
               </ul>
             </div>
           ))}
-          {aba === 'crimes' && (
-            <div className="space-y-4">
-              <div className="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-4">
-                <p className="font-bold text-red-800 mb-1">⚠️ O que são crimes cibernéticos?</p>
-                <p className="text-sm text-red-700">São crimes cometidos pela internet que podem causar prejuízo financeiro, roubo de dados pessoais ou danos à sua reputação.</p>
-              </div>
-              {[
-                { icon: '🎣', titulo: 'Phishing', desc: 'Mensagens falsas que imitam bancos, INSS ou empresas para roubar seus dados. Geralmente chegam por email, SMS ou WhatsApp.' },
-                { icon: '💸', titulo: 'Estelionato Digital', desc: 'Golpistas se passam por parentes, funcionários de banco ou vendedores para enganar e roubar dinheiro.' },
-                { icon: '🔒', titulo: 'Ransomware', desc: 'Vírus que bloqueia seu computador e pede dinheiro para desbloquear. Nunca pague — chame um técnico.' },
-                { icon: '📷', titulo: 'Extorsão Virtual', desc: 'Ameaças usando fotos ou vídeos para pedir dinheiro. É crime! Não pague e denuncie imediatamente.' },
-                { icon: '👤', titulo: 'Roubo de Identidade', desc: 'Criminosos usam seus dados pessoais para abrir contas, fazer empréstimos ou compras no seu nome.' },
-                { icon: '❤️', titulo: 'Golpe do Amor', desc: 'Pessoa falsa cria relacionamento online e depois pede dinheiro. Desconfie de quem nunca quer aparecer em vídeo.' },
-              ].map((c, i) => (
-                <div key={i} className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-red-400">
-                  <h3 className="font-bold mb-1 flex items-center gap-2"><span className="text-xl">{c.icon}</span>{c.titulo}</h3>
-                  <p className="text-sm text-slate-600">{c.desc}</p>
-                </div>
-              ))}
-              <div className="bg-red-600 text-white rounded-xl p-4 text-center">
-                <p className="font-bold mb-2">Sofreu um crime? DENUNCIE!</p>
-                <button onClick={() => setAba('denunciar')} className="bg-white text-red-600 font-bold py-2 px-6 rounded-lg">Ver como denunciar →</button>
-              </div>
-            </div>
-          )}
-          {aba === 'denunciar' && (
-            <div className="space-y-4">
-              <div className="bg-red-50 border-2 border-red-300 rounded-xl p-4">
-                <p className="font-bold text-red-800 mb-1">🚨 Fui vítima de crime! O que fazer?</p>
-                <p className="text-sm text-red-700">Não se envergonhe — qualquer pessoa pode ser vítima. O importante é agir rápido!</p>
-              </div>
-              {[
-                { icon: '🚔', titulo: 'Polícia Civil (Delegacia Virtual)', desc: 'Registre boletim de ocorrência online, sem sair de casa.', link: 'https://www.delegaciavirtual.sinesp.gov.br', btn: 'Acessar Delegacia Virtual' },
-                { icon: '🌐', titulo: 'SaferNet Brasil', desc: 'Denuncie crimes de internet como phishing, estelionato e conteúdo ilegal.', link: 'https://new.safernet.org.br/denuncie', btn: 'Fazer Denúncia' },
-                { icon: '🏛️', titulo: 'CERT.br (Incidentes de Rede)', desc: 'Central de tratamento de incidentes de segurança na internet no Brasil.', link: 'https://www.cert.br/report/', btn: 'Reportar Incidente' },
-                { icon: '📞', titulo: 'Procon BH', desc: 'Para golpes em compras online ou fraudes de consumo.', link: 'https://prefeitura.pbh.gov.br/procon', btn: 'Acessar Procon BH' },
-                { icon: '🏦', titulo: 'Banco Central (Pix indevido)', desc: 'Se fez PIX por engano ou golpe, entre em contato com seu banco IMEDIATAMENTE e registre ocorrência.', link: 'https://www.bcb.gov.br/meusbcb/registrarreclamacao', btn: 'Reclamação no BC' },
-              ].map((d, i) => (
-                <div key={i} className="bg-white rounded-xl p-4 shadow-sm">
-                  <h3 className="font-bold mb-1 flex items-center gap-2"><span className="text-xl">{d.icon}</span>{d.titulo}</h3>
-                  <p className="text-sm text-slate-600 mb-3">{d.desc}</p>
-                  <button onClick={() => window.open(d.link, '_blank')} className="w-full bg-red-500 text-white font-bold py-2 rounded-lg text-sm">
-                    {d.btn} →
-                  </button>
-                </div>
-              ))}
-              <div className="bg-slate-800 text-white rounded-xl p-4 text-center">
-                <p className="font-bold mb-1">📞 Emergência</p>
-                <p className="text-2xl font-black mb-1">190</p>
-                <p className="text-sm opacity-80">Polícia Militar — Se estiver em perigo imediato</p>
-              </div>
-            </div>
-          )}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
 
   // ==================== TRANSFERÊNCIA ====================
   const TelaTransferencia = ({ bancoId }) => {
@@ -2410,7 +2188,6 @@ export default function AppIdosos() {
     if (screen === 'mobilidade') return <TelaMobilidade />;
     if (screen === 'loja') return <TelaLoja />;
     if (screen === 'inss') return <TelaINSS />;
-    if (screen === 'pbh') return <TelaPBH />;
     if (screen === 'comida') return <TelaComida />;
     if (screen === 'sms') return <TelaSMS />;
     if (screen === 'seguranca') return <TelaSeguranca />;
@@ -2423,6 +2200,7 @@ export default function AppIdosos() {
     if (screen === 'cartoes-rosa') return <TelaCartoes bancoId="rosa" />;
     if (screen.startsWith('extrato-')) return <TelaExtrato bancoId={screen.split('-')[1]} />;
     if (screen.startsWith('pagar-')) return <TelaPagar bancoId={screen.split('-')[1]} />;
+    if (screen === 'transfer-rosa') return <TelaTransferencia bancoId="rosa" />;
     return <TelaInicial />;
   };
 
